@@ -6,6 +6,7 @@ import com.example.cer.utils.PdfUtil;
 import com.example.cer.domain.dto.CBSApprovalFormDto;
 import com.itextpdf.forms.PdfAcroForm;
 import com.itextpdf.forms.fields.PdfFormField;
+import com.itextpdf.io.codec.Base64;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -17,7 +18,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -190,6 +193,9 @@ public class PdfBuilderService {
             if (!"".equals(cbsApprovalFormDto.getApply().getApplicantSignature())){
                 String pngPath =  PdfUtil.SvgToPng(cbsApprovalFormDto.getApply().getApplicantSignature());
                 File pngFile = PdfUtil.RotationImage(pngPath);
+//                String base64 =  FileUtil.encode(pngFile.getAbsolutePath());
+//                System.out.println(base64);
+//                formFieldMap.get("sqrqm").setValue(base64);
                 pdfUtil.Image(pdfDocument,formFieldMap.get("sqrqm"),pngFile.getAbsolutePath());
                 pngPathList.add(pngPath);
                 pngPathList.add(pngFile.getAbsolutePath());
@@ -199,6 +205,9 @@ public class PdfBuilderService {
             if (!"".equals(cbsApprovalFormDto.getParentOpinion().getParentSignature())){
                 String pngPath =  PdfUtil.SvgToPng(cbsApprovalFormDto.getParentOpinion().getParentSignature());
                 File pngFile = PdfUtil.RotationImage(pngPath);
+//                String base64 =  FileUtil.encode(pngFile.getAbsolutePath());
+//                System.out.println(base64);
+//                formFieldMap.get("jzqm").setValue(base64);
                 pdfUtil.Image(pdfDocument,formFieldMap.get("jzqm"),pngFile.getAbsolutePath());
                 pngPathList.add(pngPath);
                 pngPathList.add(pngFile.getAbsolutePath());
@@ -208,6 +217,9 @@ public class PdfBuilderService {
             if (!"".equals(cbsApprovalFormDto.getInstructorOpinion().getInstructorSignature())){
                 String pngPath =  PdfUtil.SvgToPng(cbsApprovalFormDto.getInstructorOpinion().getInstructorSignature());
                 File pngFile = PdfUtil.RotationImage(pngPath);
+//                String base64 =  FileUtil.encode(pngFile.getAbsolutePath());
+//                System.out.println(base64);
+//                formFieldMap.get("fdyqm").setValue(base64);
                 pdfUtil.Image(pdfDocument,formFieldMap.get("fdyqm"),pngFile.getAbsolutePath());
                 pngPathList.add(pngPath);
                 pngPathList.add(pngFile.getAbsolutePath());
@@ -257,7 +269,7 @@ public class PdfBuilderService {
         assert pdfDocument != null;
         close(pdfDocument);
         deletePng(pngList);//关闭文档后,删除图片
-        upload.uploadPdf(newPdfPath);//异步上传七牛云
+//        upload.uploadPdf(newPdfPath);//异步上传七牛云
     }
 
 

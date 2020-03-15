@@ -4,6 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Base64;
 
 @Slf4j
 @Component
@@ -20,6 +25,25 @@ public class FileUtil {
             }
         }
         return filename;
+    }
+
+    /**
+     * 图片转为base64编码
+     */
+    public static String encode(String filePath){
+        FileInputStream inputStream;
+        byte[] data = null;
+        try {
+            inputStream = new FileInputStream(filePath);
+            data = new byte[inputStream.available()];
+            inputStream.read(data);
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert data != null;
+        // 返回Base64编码过的字节数组字符串
+        return Base64.getEncoder().encodeToString(data);
     }
 
     /**
