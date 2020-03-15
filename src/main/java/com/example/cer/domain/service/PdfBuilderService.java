@@ -242,7 +242,7 @@ public class PdfBuilderService {
 
     private void Builder(CBSApprovalFormDto cbsApprovalFormDto){
         String templatePath = rootPath + "/assets/template/comeBackTemplate.pdf";
-        String newPdfPath = rootPath + "/pdf/comeBackSchool/" + cbsApprovalFormDto.getPdfName() + ".pdf";
+        String newPdfPath = rootPath + "/pdf/comeBackSchool/" + cbsApprovalFormDto.getPdfName();
         PdfDocument pdfDocument = null;
         try {
              pdfDocument = new PdfDocument(new PdfReader(templatePath), new PdfWriter(newPdfPath));

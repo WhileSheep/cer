@@ -29,6 +29,8 @@ class CerApplicationTests {
 
     @Test
     void getTemplate(){
-
+        String pdfLocalPath = "E:/JavaCode/SY/cer/pdf/comeBackSchool/06.pdf.pdf";
+        String a = pdfLocalPath.substring(pdfLocalPath.lastIndexOf("/")+1);
+        System.out.println(a);
     }
 }

@@ -33,7 +33,9 @@ public class dataFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         BufferedReader bufferedReader = request.getReader();
         String bodyStr = IOUtils.read(bufferedReader);
+//        System.out.println(bodyStr);
         JSONArray jsonArray = JSONArray.parseArray(bodyStr);
+//        System.out.println(jsonArray);
         List<CBSApprovalFormDto> cbsApprovalFormDtos = JSONObject.parseArray(jsonArray.toJSONString(),CBSApprovalFormDto.class);
         if (cbsApprovalFormDtos.size() == 0){
             servletRequest.getRequestDispatcher("/Exception/NullPointer").forward(servletRequest, servletResponse);

@@ -31,11 +31,11 @@ public class qiniuUpload {
 
         UploadManager uploadManager = new UploadManager(cfg);
 
-        String key = null;
+        String key = pdfLocalPath.substring(pdfLocalPath.lastIndexOf("/")+1);
         Auth auth = Auth.create(accessKey, secretKey);
-        String upToken = auth.uploadToken(bucket);
+        String upToken = auth.uploadToken(bucket,key);//用token来判断是否是覆盖上传
         try {
-            Response response = uploadManager.put(pdfLocalPath, key, upToken);
+            Response response = uploadManager.put(pdfLocalPath, key, upToken);//上传
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
             log.info("上传返回结果:" + putRet.hash);
