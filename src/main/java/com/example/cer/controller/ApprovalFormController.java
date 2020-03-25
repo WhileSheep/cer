@@ -6,15 +6,11 @@ import com.example.cer.domain.dto.OSApprovalFormDto;
 import com.example.cer.domain.dto.SSApprovalFormDto;
 import com.example.cer.domain.service.ApprovalFormService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 
@@ -43,18 +39,16 @@ public class ApprovalFormController {
      * 休学
      */
     @RequestMapping(value = "/suspendSchool",method = RequestMethod.POST)
-    public ResponseEntity suspendSchool(@RequestBody List<SSApprovalFormDto> sSApprovalFormDtos){
+    public void suspendSchool(@RequestBody List<SSApprovalFormDto> sSApprovalFormDtos){
         ApprovalFormService.sSDataProcessing(sSApprovalFormDtos);
-        return null;
     }
 
     /**
      * 退学
      */
     @RequestMapping(value = "/outSchool",method = RequestMethod.POST)
-    public ResponseEntity outSchool(@RequestBody List<OSApprovalFormDto> oSApprovalFormDtos){
+    public void outSchool(@RequestBody List<OSApprovalFormDto> oSApprovalFormDtos){
         ApprovalFormService.outDataProcessing(oSApprovalFormDtos);
-        return null;
     }
 
     /**

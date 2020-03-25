@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import javax.validation.constraints.NotNull;
 
 /**
- * 家长意见
+ * 复学审批表 家长意见
  */
 @Data
 @Component

@@ -7,7 +7,6 @@ import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import org.apache.batik.transcoder.TranscoderException;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
@@ -25,12 +24,18 @@ public class PdfUtil {
     /**
      * Svg文件转为Png图片
      */
-    public static String SvgToPng(String url) {
+    public static String SvgToPng(String url,String pdfName,String root) {
+        pdfName = FileUtil.getFileNameNoEx(pdfName);
         String pngUrl = null;
         try {
             String rootPath = new File("").getCanonicalPath();
             InputStream inputStream = ImageUtil.getImageStream(url);
-            pngUrl = rootPath + "/signature/primitive/" + (int)((Math.random()*9+1)*10000000) + ".png";
+            String filePath = rootPath + "/signature/primitive/" + root + "/" + pdfName + "/";
+            File fileDir = new File(filePath);
+            if (!fileDir.exists()){
+                fileDir.mkdirs();//创建文件夹
+            }
+            pngUrl = filePath + (int)((Math.random()*9+1)*10000000) + ".png";
             ImageUtil.convertSvg2Png(inputStream,new File(pngUrl));
             if (inputStream != null) {
                 inputStream.close();//关闭流
@@ -44,7 +49,8 @@ public class PdfUtil {
     /**
      * iTextPdf7的imageData目前做到无法旋转任意图片，旋转图片的逻辑需要使用java手动完成
      */
-    public static File RotationImage(String imgUrl){
+    public static File RotationImage(String imgUrl,String pdfName,String root){
+        pdfName = FileUtil.getFileNameNoEx(pdfName);
         BufferedImage sourceImg;
         File file = null;
         try {
@@ -63,7 +69,12 @@ public class PdfUtil {
                 //获取图片后缀名
                 List<String> list = ImageUtil.getImageFormat(inputStream2);
                 String formatName = list.get(0);
-                file = new File(rootPath + "/signature/rotation/" +  pngName);
+                String filePath = rootPath + "/signature/rotation/" + root +  "/" + pdfName +"/";
+                File fileDir = new File(filePath);
+                if (!fileDir.exists()){
+                    fileDir.mkdirs();//创建文件夹
+                }
+                file = new File( filePath + pngName);
                 ImageIO.write(sourceImg,formatName,file);
             }else {//图片是横着的  不需要旋转
                 file = new File(imgUrl);

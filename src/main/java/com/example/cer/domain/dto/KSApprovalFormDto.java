@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-public class KSApprovalFormDto {
+public class KSApprovalFormDto implements Dto{
+    private int i;
+    private String pdfName;
     private KSBasicInformationEntity basicInformation;
     private keepSchoolApplyEntity apply;
     private parentOpinionEntity parentOpinion;
@@ -18,4 +20,10 @@ public class KSApprovalFormDto {
     private eduOpinionEntity eduOpinion;
     private stuOpinionEntity stuOpinion;
     private String studentSignature;
+
+    @Override
+    public KSApprovalFormDto run() {
+        this.i = 4;
+        return this;
+    }
 }
