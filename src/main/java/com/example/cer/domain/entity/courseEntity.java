@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class courseEntity {
-    private String cGrade;
+    private String cgrade;
     private String semester;
 }

@@ -26,7 +26,7 @@ public class qiniuUpload {
 
     @Async
     public void uploadPdf(String pdfLocalPath){
-        log.info(Thread.currentThread().getName() + " upload内异步方法开始" + Thread.currentThread().isAlive());
+        log.info("七牛云上传");
         Configuration cfg = new Configuration(Region.region1());
 
         UploadManager uploadManager = new UploadManager(cfg);
@@ -38,16 +38,15 @@ public class qiniuUpload {
             Response response = uploadManager.put(pdfLocalPath, key, upToken);//上传
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-            log.info("上传返回结果:" + putRet.hash);
         } catch (QiniuException ex) {
             Response r = ex.response;
-            System.err.println(r.toString());
+            log.error(r.toString());
             try {
-                System.err.println(r.bodyString());
+                log.error(r.bodyString());
             } catch (QiniuException ex2) {
                 //ignore
             }
         }
-        log.info(Thread.currentThread().getName() + " upload内异步方法结束" + Thread.currentThread().isAlive());
+        log.info("七牛云结束");
     }
 }

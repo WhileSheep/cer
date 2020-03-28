@@ -1,6 +1,7 @@
 package com.example.cer.utils;
 
 
+import com.itextpdf.io.codec.Base64;
 import org.apache.batik.transcoder.Transcoder;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
@@ -32,21 +33,14 @@ public class ImageUtil {
     /**
      * 将svg文件转为png图片
      */
-    public static void convertSvg2Png(InputStream in, File png) throws IOException, TranscoderException {
-        OutputStream out = new FileOutputStream(png);
-        out = new BufferedOutputStream(out);
+    public static ByteArrayOutputStream convertSvg2Png(InputStream in) throws IOException, TranscoderException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         Transcoder transcoder = new PNGTranscoder();
-        try {
-            TranscoderInput input = new TranscoderInput(in);
-            try {
-                TranscoderOutput output = new TranscoderOutput(out);
-                transcoder.transcode(input, output);
-            } finally {
-                out.close();
-            }
-        } finally {
-            in.close();
-        }
+        TranscoderInput input = new TranscoderInput(in);
+        TranscoderOutput output = new TranscoderOutput(out);
+        transcoder.transcode(input, output);
+        in.close();
+        return out;
     }
 
     /**

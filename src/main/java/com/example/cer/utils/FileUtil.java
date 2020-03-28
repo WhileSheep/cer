@@ -52,6 +52,13 @@ public class FileUtil {
 
 
     /**
+     * 字节数组转为base64编码
+     */
+    public static String byteToBase64(byte[] b){
+        return Base64.getEncoder().encodeToString(b);
+    }
+
+    /**
      * 图片转为base64编码
      */
     public static String encode(String filePath){

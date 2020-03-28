@@ -11,12 +11,8 @@ import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.MalformedURLException;
-import java.util.List;
 
 @Component
 public class PdfUtil {
@@ -24,67 +20,40 @@ public class PdfUtil {
     /**
      * Svg文件转为Png图片
      */
-    public static String SvgToPng(String url,String pdfName,String root) {
-        pdfName = FileUtil.getFileNameNoEx(pdfName);
-        String pngUrl = null;
+    public static ByteArrayOutputStream SvgToPng(String url) {
+        ByteArrayOutputStream out = null;
         try {
-            String rootPath = new File("").getCanonicalPath();
             InputStream inputStream = ImageUtil.getImageStream(url);
-            String filePath = rootPath + "/signature/primitive/" + root + "/" + pdfName + "/";
-            File fileDir = new File(filePath);
-            if (!fileDir.exists()){
-                fileDir.mkdirs();//创建文件夹
-            }
-            pngUrl = filePath + (int)((Math.random()*9+1)*10000000) + ".png";
-            ImageUtil.convertSvg2Png(inputStream,new File(pngUrl));
+            out = ImageUtil.convertSvg2Png(inputStream);
             if (inputStream != null) {
                 inputStream.close();//关闭流
             }
         } catch (IOException | TranscoderException e) {
             e.printStackTrace();
         }
-        return pngUrl;
+        return out;
     }
 
     /**
      * iTextPdf7的imageData目前做到无法旋转任意图片，旋转图片的逻辑需要使用java手动完成
      */
-    public static File RotationImage(String imgUrl,String pdfName,String root){
-        pdfName = FileUtil.getFileNameNoEx(pdfName);
+    public static ByteArrayOutputStream RotationImage(ByteArrayOutputStream out){
         BufferedImage sourceImg;
-        File file = null;
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            String rootPath = new File("").getCanonicalPath();
-            File picture = new File(imgUrl);
-            InputStream inputStream1 = new FileInputStream(picture);
-            InputStream inputStream2 = new FileInputStream(imgUrl);
+            InputStream inputStream1 = new ByteArrayInputStream(out.toByteArray());
             sourceImg = ImageIO.read(inputStream1);
             float width = sourceImg.getWidth();
             float height = sourceImg.getHeight();
             if (width < height){//图片是竖着的  需要旋转
                 sourceImg = ImageUtil.rotateImage(sourceImg,-90);
-                //获取图片名称
-                File tempFile =new File(imgUrl.trim());
-                String pngName = tempFile.getName();
-                //获取图片后缀名
-                List<String> list = ImageUtil.getImageFormat(inputStream2);
-                String formatName = list.get(0);
-                String filePath = rootPath + "/signature/rotation/" + root +  "/" + pdfName +"/";
-                File fileDir = new File(filePath);
-                if (!fileDir.exists()){
-                    fileDir.mkdirs();//创建文件夹
-                }
-                file = new File( filePath + pngName);
-                ImageIO.write(sourceImg,formatName,file);
-            }else {//图片是横着的  不需要旋转
-                file = new File(imgUrl);
+                ImageIO.write(sourceImg,"png",outputStream);
             }
             inputStream1.close();
-            inputStream2.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return file;
+        return outputStream;
     }
 
     /**

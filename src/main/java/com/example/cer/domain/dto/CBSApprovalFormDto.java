@@ -11,8 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Component
-public class CBSApprovalFormDto implements Dto {
-    private int i;
+public class CBSApprovalFormDto {
     private String pdfName;
     private CBSBasicInformationEntity basicInformation;
     private applyEntity apply;
@@ -20,10 +19,4 @@ public class CBSApprovalFormDto implements Dto {
     private instructorOpinionEntity instructorOpinion;
     private collegeOpinionEntity collegeOpinion;
     private schoolOpinionEntity schoolOpinion;
-
-    @Override
-    public CBSApprovalFormDto run() {
-        this.i = 1;
-        return this;
-    }
 }
