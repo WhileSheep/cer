@@ -91,7 +91,6 @@ public class PdfBuilderService {
 
     @Async
     public void txsp(OSApprovalFormDto osApprovalFormDto){
-        log.info("pdf开始");
         String pdfPath = pdfConfig.getDto(2).getPdfPath() + osApprovalFormDto.getPdfName();
         PdfDocument pdfDocument = null;
         try {
@@ -106,7 +105,6 @@ public class PdfBuilderService {
         flattenFields(pdfAcroForm);
         assert pdfDocument != null;
         close(pdfDocument);
-        log.info("pdf完成");
         upload.uploadPdf(pdfPath);
     }
 

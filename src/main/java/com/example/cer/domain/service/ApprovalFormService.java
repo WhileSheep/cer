@@ -39,12 +39,12 @@ public class ApprovalFormService {
      */
     @Async
     public void sSDataProcessing(List<SSApprovalFormDto> sSApprovalFormDtos){
-        log.info(Thread.currentThread().getName() + " 外异步方法开始: " + "生成复学审批表" + Thread.currentThread().isAlive());
+        log.info(Thread.currentThread().getName() + " 外异步方法开始: " + "生成休学审批表" + Thread.currentThread().isAlive());
         log.info(String.valueOf(sSApprovalFormDtos));
         for (SSApprovalFormDto ssApprovalFormDto : sSApprovalFormDtos) {
             pdfBuilderService.xxsp(ssApprovalFormDto);   //内异步开始  //插入信息
         }
-        log.info(Thread.currentThread().getName() + " 外异步方法结束: " + "生成复学审批表" + Thread.currentThread().isAlive());
+        log.info(Thread.currentThread().getName() + " 外异步方法结束: " + "生成休学审批表" + Thread.currentThread().isAlive());
     }
 
 
@@ -53,12 +53,12 @@ public class ApprovalFormService {
      */
     @Async
     public void outDataProcessing(List<OSApprovalFormDto> osApprovalFormDtos){
-        log.info(Thread.currentThread().getName() + " 外异步方法开始: " + "生成复学审批表" + Thread.currentThread().isAlive());
+        log.info(Thread.currentThread().getName() + " 外异步方法开始: " + "生成退学审批表" + Thread.currentThread().isAlive());
         log.info(String.valueOf(osApprovalFormDtos));
         for (OSApprovalFormDto osApprovalFormDto : osApprovalFormDtos) {
             pdfBuilderService.txsp(osApprovalFormDto);   //内异步开始  //插入信息
         }
-        log.info(Thread.currentThread().getName() + " 外异步方法结束: " + "生成复学审批表" + Thread.currentThread().isAlive());
+        log.info(Thread.currentThread().getName() + " 外异步方法结束: " + "生成退学审批表" + Thread.currentThread().isAlive());
     }
 
 

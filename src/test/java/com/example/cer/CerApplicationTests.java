@@ -1,5 +1,6 @@
 package com.example.cer;
 
+import com.example.cer.domain.service.redisService;
 import com.example.cer.utils.PdfUtil;
 import com.example.cer.domain.service.PdfBuilderService;
 import lombok.extern.slf4j.Slf4j;
@@ -17,20 +18,20 @@ class CerApplicationTests {
     private PdfBuilderService pdfBuilderService;
     @Autowired
     private PdfUtil pdfUtil;
+    @Autowired
+    private redisService redisService;
 
 
 
-    @Test
-    void contextLoads() {
-//        String a = FileUtil.getFileNameNoEx("http://mt.qiniu.timkj.cn/1_o5pPPjg7st2h2yQ3DtbfT2HF9fUE.jpg");
+//    @Test
+//    void contextLoads() {
+//        redisService.set("cer:txsp:0565656:sqrqz",456);
+//    }
+//
+//    @Test
+//    void getTemplate(){
+//        String pdfLocalPath = "E:/JavaCode/SY/cer/pdf/comeBackSchool/06.pdf.pdf";
+//        String a = pdfLocalPath.substring(pdfLocalPath.lastIndexOf("/")+1);
 //        System.out.println(a);
-//        pdfBuilderService.SvgToPng.apply("http://mt.qiniu.timkj.cn/1_o5pPPjg7st2h2yQ3DtbfT2HF9fUE.jpg");
-    }
 
-    @Test
-    void getTemplate(){
-        String pdfLocalPath = "E:/JavaCode/SY/cer/pdf/comeBackSchool/06.pdf.pdf";
-        String a = pdfLocalPath.substring(pdfLocalPath.lastIndexOf("/")+1);
-        System.out.println(a);
-    }
 }
